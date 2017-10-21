@@ -1,0 +1,8 @@
+/classes/
+/modules/
+/.exploded/
+
+/.ceylon
+/.classpath
+/.project
+/.settings
