@@ -9,6 +9,7 @@ stable.
 * Definition of injection binding via Ceylon program code
 * Interfaces or classes can be bound to classes implementing them
 * Binding can use classes or instances as binding definition
+* Cycle detection of dependencies (rejection bindings with cycles)
 * Two scopes: singleton (default) or noScope
 * Scope definition extendable
 * The same class or interface can be bound to different implementations using variants (although non-transitively)
@@ -17,6 +18,7 @@ stable.
 ## Not supported
 * Injected classes without parameter list or default constructor
 * Value injection
+* Magic stuff to solve cycles using proxy generation
 * Class scanning for injectable/injected classes
 * Transitive variants (seems to be a can of worms...)
 
