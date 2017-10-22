@@ -16,6 +16,7 @@ shared interface Binder
 shared interface BindingBuilder<Iface>
         given Iface satisfies Object
 {
+    "Cannot bind to inner classes."
     shared formal BindingBuilder<Iface> to<I>(Class<I> klass, Scope scope = singleton) given I satisfies Iface;
     shared formal BindingBuilder<Iface> toInstance(Iface instance);
 }

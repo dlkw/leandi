@@ -14,7 +14,7 @@ class ConstructorProvider<Instance>(Class<Instance> implementingClass)
         usedConstructor = defaultConstructor;
     }
     else {
-        throw BindingException("Only implemented for classes with a parameter list or default constructor");
+        throw BindingException("Only implemented for classes with a parameter list or (shared) default constructor");
     }
     
     shared actual Instance provide(Injector injector)
