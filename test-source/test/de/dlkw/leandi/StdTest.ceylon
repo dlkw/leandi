@@ -1,6 +1,5 @@
 import ceylon.test {
     test,
-    assertTrue,
     assertThatException,
     assertIs,
     assertEquals,
@@ -56,9 +55,8 @@ shared class StdTest()
     test
     shared void boundInterfaceReturnsInstanceFromClassWithUnsharedDefaultConstructor() {
         
-        value injector = createInjector((binder)
+        createInjector((binder)
         {
-            value builder = binder.bind(`IA`);
             assertThatException(()=>binder.bind(`IA`).to(`A3`)).hasType(`BindingException`);
         });
     }
@@ -66,9 +64,8 @@ shared class StdTest()
     test
     shared void boundInterfaceReturnsInstanceFromClassWithoutDefaultConstructor() {
         
-        value injector = createInjector((binder)
-            {
-            value builder = binder.bind(`IA`);
+        createInjector((binder)
+        {
             assertThatException(()=>binder.bind(`IA`).to(`A4`)).hasType(`BindingException`);
         });
     }

@@ -1,3 +1,4 @@
+"A lean dependency injection manager."
 module de.dlkw.leandi "0.0.1"
 {
     import ceylon.collection "1.3.3";
