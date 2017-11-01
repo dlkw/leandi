@@ -10,17 +10,25 @@ import de.dlkw.leandi {
     createInjector,
     BindingException,
     noScope,
-    singleton
+    singleton,
+    Module,
+    Binder,
+    Injector
 }
 
 
 shared class StdTest()
 {
+    Injector oldSingleCreateInjector(Anything(Binder) singleBindings) => createInjector(object satisfies Module
+        {
+            shared actual void bindings(Binder binder) => singleBindings(binder);
+        });
+    
     test
     shared void notBoundRaisesException() {
         interface IA{}
-        
-        value injector = createInjector((binder)
+
+        value injector = oldSingleCreateInjector((binder)
         {
             
         });
@@ -31,7 +39,7 @@ shared class StdTest()
     test
     shared void boundInterfaceReturnsInstanceFromClassWithParameters() {
         
-        value injector = createInjector((binder)
+        value injector = oldSingleCreateInjector((binder)
         {
             binder.bind(`IA`).to(`A`);
         });
@@ -43,7 +51,7 @@ shared class StdTest()
     test
     shared void boundInterfaceReturnsInstanceFromClassWithDefaultConstructor() {
         
-        value injector = createInjector((binder)
+        value injector = oldSingleCreateInjector((binder)
             {
             binder.bind(`IA`).to(`A2`);
         });
@@ -55,7 +63,7 @@ shared class StdTest()
     test
     shared void boundInterfaceReturnsInstanceFromClassWithUnsharedDefaultConstructor() {
         
-        createInjector((binder)
+        oldSingleCreateInjector((binder)
         {
             assertThatException(()=>binder.bind(`IA`).to(`A3`)).hasType(`BindingException`);
         });
@@ -64,7 +72,7 @@ shared class StdTest()
     test
     shared void boundInterfaceReturnsInstanceFromClassWithoutDefaultConstructor() {
         
-        createInjector((binder)
+        oldSingleCreateInjector((binder)
         {
             assertThatException(()=>binder.bind(`IA`).to(`A4`)).hasType(`BindingException`);
         });
@@ -73,7 +81,7 @@ shared class StdTest()
     test
     shared void boundInterfaceReturnsInstanceAsVariant() {
         
-        value injector = createInjector((binder)
+        value injector = oldSingleCreateInjector((binder)
             {
             binder.bind(`IA`).to(`A`);
             binder.bind(`IA`, "v1").to(`A0`);
@@ -95,7 +103,7 @@ shared class StdTest()
     test
     shared void boundInterfaceReturnsSingletonAsDefault() {
         
-        value injector = createInjector((binder)
+        value injector = oldSingleCreateInjector((binder)
             {
             binder.bind(`IA`).to(`A`);
         });
@@ -110,7 +118,7 @@ shared class StdTest()
     test
     shared void boundInterfaceReturnsSingleton() {
         
-        value injector = createInjector((binder)
+        value injector = oldSingleCreateInjector((binder)
             {
             binder.bind(`IA`).to(`A`, singleton);
         });
@@ -125,7 +133,7 @@ shared class StdTest()
     test
     shared void boundInterfaceReturnsNoScope() {
         
-        value injector = createInjector((binder)
+        value injector = oldSingleCreateInjector((binder)
             {
             binder.bind(`IA`).to(`A`, noScope);
         });
@@ -141,7 +149,7 @@ shared class StdTest()
     test
     shared void scopeWorksWithVariants() {
         
-        value injector = createInjector((binder)
+        value injector = oldSingleCreateInjector((binder)
             {
             binder.bind(`IA`, "v1").to(`A`, singleton);
             binder.bind(`IA`, "v2").to(`A`, singleton);

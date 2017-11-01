@@ -14,7 +14,7 @@ shared interface Injector
 }
 
 "Creates an injector from bindings. See package description."
-shared Injector createInjector(Anything(Binder) bindings) => InjectorImpl(bindings);
+shared Injector createInjector(Module+ modules) => InjectorImpl(*modules);
 
 shared class BindingException(String description)
         extends Exception(description){}

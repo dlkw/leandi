@@ -50,7 +50,7 @@ class Key(ClassOrInterface<Object> type, String? variant = null)
 }
 
 
-class InjectorImpl(Anything(Binder) bindings)
+class InjectorImpl(Module+ modules)
         satisfies Injector
 {
     value providers = HashMap<Key, Provider<Object>>();
@@ -142,5 +142,5 @@ class InjectorImpl(Anything(Binder) bindings)
     
     value binder = BinderImpl();
     
-    bindings(binder);
+    modules.each((\imodule) => \imodule.bindings(binder));
 }
