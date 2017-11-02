@@ -27,6 +27,7 @@ stable.
 ```ceylon
 import de.dlkw.leandi {
     Binder,
+    Module,
     singleton,
     createInjector
 }
