@@ -34,13 +34,18 @@ import de.dlkw.leandi {
 
 shared void run()
 {
-    value injector = createInjector((binder)
+    value diModule = object satisfies Module
     {
-        binder.bind<IA>(`IA`).to(`A`, singleton);
-        binder.bind<IB>(`IB`).to(`B`, singleton);
-        binder.bind<IB>(`IB`, "j").to(`B`, singleton);
-        binder.bind<IC>(`IC`).to(`C`, singleton);
-    });
+        shared actual void bindings(Binder binder)
+        {
+            binder.bind<IA>(`IA`).to(`A`, singleton);
+            binder.bind<IB>(`IB`).to(`B`, singleton);
+            binder.bind<IB>(`IB`, "j").to(`B`, singleton);
+            binder.bind<IC>(`IC`).to(`C`, singleton);
+        }
+    };
+
+    value injector2 = createInjector(diModule);
 
     value c = injector.instance(`IC`);
     print(c);
